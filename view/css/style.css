@@ -1,0 +1,122 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.6;
+    /* background: url('—Pngtree—abstract\ green\ flowing\ wave\ background_5071952.png') no-repeat;
+      background-size: cover; */
+  }
+  
+  ul {
+    list-style: none;
+  }
+  
+  ul li {
+    padding: 5px;
+    background: #f4f4f4;
+    margin: 5px 0;
+  }
+  
+  header {
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;
+    color: #0b0000;
+  }
+  
+  .container {
+    margin: auto;
+    width: 500px;
+    border-radius: 30px;
+    overflow: auto;
+    padding: 15px 15px;
+    background: transparent;
+    border: 2px solid #8d8484;
+  }
+  
+  .post {
+    display: grid;
+    margin: 20px auto 20px;
+    border-radius: 30px;
+    padding: 20px 20px 20px 20px;
+    width: 500px;
+    color: #fff;
+    align-content: center;
+    background: #052260a4;
+  }
+  
+  img {
+    max-width: 100%;
+    border-radius: 20px;
+  }
+  
+  .input {
+    display: none;
+  }
+  
+  .input input[type='text'] {
+    width: 100%;
+    padding: 8px;
+    margin: 5px auto;
+    background: transparent;
+    border-radius: 40px;
+    border: 2px solid #8d8484;
+    font-size: 18px;
+    color: #ffffff;
+    padding: 7px 12px 7px 12px;
+  }
+  
+  #form {
+    font-weight: 600;
+    padding: 10px;
+  }
+  
+  #form label {
+    display: block;
+  }
+  
+  #form input[type='text'] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    background: transparent;
+    border-radius: 40px;
+    border: 2px solid #8d8484;
+    font-size: 18px;
+    color: #2a0505;
+    padding: 7px 12px 7px 12px;
+  }
+  
+  .btn {
+    font-size: larger;
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    border: 0;
+    background: #6171ff;
+    color: #fff;
+    border-radius: 5px;
+    margin: 5px 0;
+  }
+  
+  .btn2 {
+    font-size: medium;
+    padding: 5px 5px;
+    border: 0;
+    background: #0e7444;
+    color: #fff;
+    border-radius: 5px;
+    margin: auto;
+  }
+  
+  .btn:hover {
+    background: #0f1a97;
+  }
+  
+  .btn2:hover {
+    background: #ae1515;
+  }
