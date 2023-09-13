@@ -7,7 +7,6 @@ exports.postUser = async (req, res, next) => {
         const email = req.body.email;
         const password = req.body.password;
         const existingUser = await User.findOne({ where: {email: email}})
-
         if(existingUser){
             res.json({message : "User Already Exist!"})
         }else {
@@ -19,7 +18,7 @@ exports.postUser = async (req, res, next) => {
                     password: hash
                 })
                 res.status(201).json({message : "User Signup Successfully!"})
-            })  
+            })
         }
     } catch { err => console.log(err) }
 }

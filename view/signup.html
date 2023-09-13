@@ -21,6 +21,7 @@
             <div class="inputbox">
                 <input type="password" id="password" name="password" required>
                 <label for="name">Password</label>
+                <img src="/css/eye-close.png" id="eyeicon">
             </div>
             <button class="btn">Signup</button>
             <div class="register">
@@ -29,22 +30,6 @@
         </form>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-    <script>
-        function saveUser(event) {
-            event.preventDefault()
-            const name = event.target.name.value;
-            const email = event.target.email.value;
-            const password = event.target.password.value;
-            const user = {
-                name, email, password
-            }
-            axios.post("http://localhost:4500/user/signup", user)
-                .then(response => {
-                    alert(response.data.message)
-                })
-                .catch(err => console.log(err))
-        }
-    </script>
+    <script src="/common/common.js"></script>
 </body>
-
 </html>
