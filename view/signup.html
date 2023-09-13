@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Expense Signup</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
+
 <body>
     <div class="container">
-        <div class="box">
-            <form class="form" onsubmit="saveUser(event)">
-                <label for="name">Name</label>
+        <form onsubmit="saveUser(event)">
+            <h1>Signup</h1>
+            <div class="inputbox">
                 <input type="text" id="name" name="name" required>
-                <label for="name">Email</label>
+                <label for="name">Name</label>
+            </div>
+            <div class="inputbox">
                 <input type="text" id="email" name="email" required>
-                <label for="name">Password</label>
+                <label for="name">Email</label>
+            </div>
+            <div class="inputbox">
                 <input type="text" id="password" name="password" required>
-                <button class="btn">Signup</button>
-                <label for="login">Already have an account</label>
-                <a href="/login.html">Login</a>
-                
-            </form>
-        </div>
-
+                <label for="name">Password</label>
+            </div>
+            <button class="btn">Signup</button>
+            <div class="register">
+                <p>Have an account <a href="/login.html">login</a></p>
+            </div>
+        </form>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script>
@@ -29,16 +35,16 @@
             const name = event.target.name.value;
             const email = event.target.email.value;
             const password = event.target.password.value;
-            const user ={
+            const user = {
                 name, email, password
             }
             axios.post("http://localhost:4500/user/signup", user)
-            .then(response => {
-                console.log(response.data.userDetails)
-                console.log(response.data.message)
-            })
-            .catch(err => console.log(err))
+                .then(response => {
+                    alert(response.data.message)
+                })
+                .catch(err => console.log(err))
         }
     </script>
 </body>
+
 </html>
