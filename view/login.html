@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Expense Login</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            <form class="form" onsubmit="saveUser(event)">
+                <label for="name">Email</label>
+                <input type="text" id="email" name="email" required>
+                <label for="name">Password</label>
+                <input type="text" id="password" name="password" required>
+                <button class="btn">Login</button>
+                <label for="login">Don't have an account</label>
+                <a href="/signup.html">Signup</a>
+            </form>
+        </div>
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script>
+        function saveUser(event) {
+            event.preventDefault()
+            const email = event.target.email.value;
+            const password = event.target.password.value;
+            const user ={
+                email, password
+            }
+            axios.post("http://localhost:4500/user/login", user)
+            .then(response => {
+                console.log(response.data.userDetails)
+                console.log(response.data.message)
+            })
+            .catch(err => console.log(err))
+        }
+    </script>
+</body>
+</html>
