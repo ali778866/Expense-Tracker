@@ -11,16 +11,20 @@ eyeicon.onclick = () => {
     }
 }
 
-function logInUser(event) {
+async function logInUser(event) {
     event.preventDefault()
     const email = event.target.email.value;
     const password = event.target.password.value;
     const user = {
         email, password
     }
-    axios.post("http://localhost:4500/user/login", user)
+    await axios.post("http://localhost:4500/user/login", user)
         .then(response => {
             alert(response.data.message)
+            // console.log("user::::", response.data.userId)
+            localStorage.setItem('token', response.data.token)
+            localStorage.setItem('userId', response.data.userId)
+            window.location.href="./expense.html"
         })
         .catch(err => console.log(err))
 }
@@ -36,6 +40,7 @@ function saveUser(event) {
     axios.post("http://localhost:4500/user/signup", user)
         .then(response => {
             alert(response.data.message)
+            window.location.href="./login.html"
         })
         .catch(err => console.log(err))
 }
