@@ -6,7 +6,8 @@
 }
 
 body {
-  display: flex;
+  display: grid;
+  width: 100%;
   padding: 15px 40px;
 }
 
@@ -68,4 +69,37 @@ body {
 
 .list-group button:hover {
   background-color: rgba(31, 172, 125, 0.899);
+}
+
+nav {
+  background-color: #7c6868;
+  width: 100%;
+  color: #fff;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Style the left side of the navigation bar (logo or title) */
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 20px;
+}
+
+/* Style the right side of the navigation bar (logout button) */
+.btn2 {
+  margin-right: 20px;
+  padding: 8px 16px;
+  background-color: #f44336;
+  border: none;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Style the logout button on hover */
+.btn2:hover {
+  background-color: #d32f2f;
 }
