@@ -12,7 +12,7 @@ const postUser = async (req, res, next) => {
             res.json({message : "User Already Exist!"})
         }else {
             bcrypt.hash(password, 10, async (err, hash) => {
-                  console.log(err);
+                  console.log('err', err);
                   await User.create({
                     name: name,
                     email: email, 
