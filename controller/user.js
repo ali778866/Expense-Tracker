@@ -2,7 +2,7 @@ const User  = require('../model/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-exports.postUser = async (req, res, next) => {
+const postUser = async (req, res, next) => {
     try {
         const name = req.body.name;
         const email = req.body.email;
@@ -24,11 +24,15 @@ exports.postUser = async (req, res, next) => {
     } catch { err => console.log(err) }
 }
 
-function generateToken(id, name) {
-    return jwt.sign({ userId : id , name : name }, 'secret');
+// exports.generateToken = (id, name, ispremiumuser) => {
+//     return jwt.sign({ userId : id , name : name , ispremiumuser}, 'secret');
+// }
+
+const generateToken = (id, name, ispremiumuser) => {
+    return jwt.sign({ userId : id , name : name , ispremiumuser}, 'secret');
 }
 
-exports.loginUser = async (req, res, next) => {
+const loginUser = async (req, res, next) => {
     try {
         const email = req.body.email;
         const password = req.body.password;
@@ -40,7 +44,7 @@ exports.loginUser = async (req, res, next) => {
                         res.status(500).json({message: "Something went wrong"})
                     }
                     if(response === true){
-                        res.status(200).json({success: true, message : "login Successfully", userId: user[0].id, token: generateToken(user[0].id, user[0].name) })
+                        res.status(200).json({success: true, message : "login Successfully", userId: user[0].id, token: generateToken(user[0].id, user[0].name, user[0].ispremiumuser) })
                     } else {
                         return res.json({success: false, message: "Password is incorrect"});
                     }
@@ -51,4 +55,10 @@ exports.loginUser = async (req, res, next) => {
     }).catch(err => console.log(err))
        
     } catch { err => console.log(err) }
+}
+
+module.exports = {
+    loginUser,
+    postUser,
+    generateToken
 }

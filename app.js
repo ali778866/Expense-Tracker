@@ -11,6 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const userRoutes = require('./routes/user');
 const expenseRoutes = require('./routes/expense')
 const purchaseRoutes = require('./routes/purchase')
+const leaderboardRoutes = require('./routes/leaderboard')
 const Expense = require('./model/expense')
 const User = require('./model/user')
 const Order = require('./model/order')
@@ -21,6 +22,7 @@ app.use(express.static(staticPath));
 app.use(userRoutes);
 app.use('/expense', expenseRoutes)
 app.use('/purchase', purchaseRoutes)
+app.use(leaderboardRoutes);
 
 User.hasMany(Expense);
 Expense.belongsTo(User);
