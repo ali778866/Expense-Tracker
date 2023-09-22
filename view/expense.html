@@ -72,6 +72,7 @@
 
         function saveEx(event) {
             event.preventDefault();
+            const token = localStorage.getItem('token')
             const amount = event.target.amount.value;
             const description = event.target.description.value;
             const category = event.target.category.value;
@@ -82,7 +83,7 @@
                 category,
                 userId
             }
-            axios.post("http://localhost:4500/expense/add-expense", obj)
+            axios.post("http://localhost:4500/expense/add-expense", obj, { headers: { "Authorization": token } })
                 .then((response) => {
                     console.log(response);
                     showExpense(response.data.addExpense);
@@ -169,7 +170,7 @@
                 leaderboardElem.innerHTML += '<h2> Leader Board </h2>'
                 leaderboardarray.data.forEach((userDetails) => {
                     console.log(userDetails)
-                    leaderboardElem.innerHTML += `<li> ${userDetails.name} Total Expense - ${userDetails.totalExpense}`
+                    leaderboardElem.innerHTML += `<li> ${userDetails.name} Total Expense - ${userDetails.totalExpenses}`
                 })
             } 
         }
