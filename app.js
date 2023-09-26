@@ -25,7 +25,7 @@ app.use(express.static(staticPath));
 app.use(userRoutes);
 app.use('/expense', expenseRoutes)
 app.use('/purchase', purchaseRoutes)
-app.use(leaderboardRoutes)
+app.use('/premium', leaderboardRoutes)
 app.use('/password', resetPassword)
 
 User.hasMany(Expense);

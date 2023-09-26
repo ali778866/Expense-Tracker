@@ -33,9 +33,11 @@
             </select>
             <button type="submit" class="btn">Add Expense</button>
         </form>
-                <ul id="listofExpense" class="list-group"></ul>
-                <ul id="leaderboarddata" class="list-group"></ul>
-        
+        <ul id="listofExpense" class="list-group"></ul>
+        <ul id="leaderboarddata" class="list-group"></ul>
+        <button type="submit" onclick="showReport()" id="rep">Show Report</button>
+        <button onclick="download()" id="downloadexpense">Download File</button>
+        <ul id="userReport" class="list-group"></ul>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
     <script>
@@ -54,7 +56,7 @@
                         .then((res) => {
                             alert('You are a Premier User Now')
                             document.getElementById('razor-pay').style.visibility = 'hidden'
-                            showLeaderboard();
+                            showLeaderboard()
                             console.log("alialiali")
                             localStorage.setItem('token', res.data.token)
                         }).catch(err => console.log(err))
@@ -108,7 +110,7 @@
             const premium = decoded.ispremiumuser;
             if (premium) {
                 document.getElementById('razor-pay').style.visibility = 'hidden';
-                showLeaderboard();
+                showLeaderboard()
             }
             axios.get("http://localhost:4500/expense/get-expense", { headers: { "Authorization": token } })
                 .then((response) => {
@@ -159,11 +161,11 @@
         function showLeaderboard() {
             const parentNode = document.getElementById('prime');
             const newChild = '<button id="leaderboard">Show Leaderboard</button>'
-            parentNode.innerHTML =parentNode.innerHTML + newChild;
+            parentNode.innerHTML = parentNode.innerHTML + newChild;
             const leaderboard = document.getElementById('leaderboard')
             leaderboard.onclick = async () => {
                 const token = localStorage.getItem('token')
-                const leaderboardarray = await axios.get('http://localhost:4500/premium', { headers: { "Authorization": token } })
+                const leaderboardarray = await axios.get('http://localhost:4500/premium/leaderboard', { headers: { "Authorization": token } })
                 var leaderboardElem = document.getElementById('leaderboarddata')
                 leaderboardElem.innerHTML = '';
                 console.log(leaderboardarray);
@@ -172,7 +174,50 @@
                     console.log(userDetails)
                     leaderboardElem.innerHTML += `<li> ${userDetails.name} Total Expense - ${userDetails.totalExpenses}`
                 })
-            } 
+            }
+        }
+
+        function showReport() {
+            var reportElem = document.getElementById('userReport')
+            reportElem.innerHTML = '';
+            reportElem.innerHTML += `<table style="width:100%">
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Expense</th>
+                    </tr>
+                    <tr>
+                        <td>15-Jan-2023</td>
+                        <td>Pathan Movie</td>
+                        <td>Movie</td>
+                        <td>$ 7896</td>
+                    </tr>
+                    <tr>
+                        <td>26-Jan-2023</td>
+                        <td>Republic Day</td>
+                        <td>Travel</td>
+                        <td>$ 2561</td>
+                    </tr>
+                </table>`
+        }
+
+        function download() {
+            const token = localStorage.getItem('token')
+            axios.get('http://localhost:4500/user/download', { headers: { "Authorization": token } })
+                .then((response) => {
+                    if (response.status === 201) {
+                        var a = document.createElement("a");
+                        a.href = response.data.fileUrl;
+                        a.download = 'myexpense.csv';
+                        a.click();
+                    } else {
+                        throw new Error(response.data.message)
+                    }
+                })
+                .catch((err) => {
+                    showError(err)
+                });
         }
     </script>
 </body>
