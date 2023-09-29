@@ -18,11 +18,12 @@ const Forgotpassword = require('./model/forgot')
 const Expense = require('./model/expense')
 const User = require('./model/user')
 const Order = require('./model/order')
+const Url = require('./model/downloadURL')
 
 const staticPath = path.join(__dirname, "./view")
 
 app.use(express.static(staticPath));
-app.use(userRoutes);
+app.use('/user', userRoutes);
 app.use('/expense', expenseRoutes)
 app.use('/purchase', purchaseRoutes)
 app.use('/premium', leaderboardRoutes)
@@ -36,6 +37,9 @@ Order.belongsTo(User);
 
 User.hasMany(Forgotpassword);
 Forgotpassword.belongsTo(User);
+
+User.hasMany(Url);
+Url.belongsTo(User);
 
 sequelize
     // .sync({force: true})
