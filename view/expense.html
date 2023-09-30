@@ -33,11 +33,13 @@
             </select>
             <button type="submit" class="btn">Add Expense</button>
         </form>
-        <ul id="listofExpense" class="list-group"></ul>
-        <ul id="leaderboarddata" class="list-group"></ul>
         <button onclick="download()">Download File</button>
         <button onclick="downloadUrls()">Show Download Urls</button>
+        <ul id="listofExpense" class="list-group"></ul>
+        <ul id="leaderboarddata" class="list-group"></ul>
+
         <ul id="downloadUrl" class="list-group"></ul>
+        <div id="pagination" class="pagination-container"></div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
     <script>
@@ -103,6 +105,9 @@
             return JSON.parse(jsonPayload);
         }
 
+        const urlParams = new URLSearchParams(window.location.search);
+        const page = parseInt(urlParams.get('page')) || 1
+
         window.addEventListener("DOMContentLoaded", () => {
             const token = localStorage.getItem('token')
             const decoded = parseJwt(token);
@@ -112,15 +117,57 @@
                 document.getElementById('razor-pay').style.visibility = 'hidden';
                 showLeaderboard()
             }
-            axios.get("http://localhost:4500/expense/get-expense", { headers: { "Authorization": token } })
+            axios.get(`http://localhost:4500/expense/get-expense?page=${page}`, { headers: { "Authorization": token } })
                 .then((response) => {
                     console.log(response);
                     for (var i = 0; i < response.data.allExpense.length; i++) {
                         showExpense(response.data.allExpense[i]);
+                        showPagination(response.data);
                     }
                 })
                 .catch(err => console.log(err))
         })
+
+        function showPagination({ currentPage, hasNextPage, nextPage, hasPreviousPage, previousPage, lastPage }) {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+            if (hasPreviousPage) {
+                const btn2 = document.createElement('button');
+                btn2.classList.add('pagination-button');
+                btn2.textContent = previousPage;
+                btn2.addEventListener('click', () => handlePageChange(previousPage))
+                pagination.appendChild(btn2)
+            }
+            const btn1 = document.createElement('button');
+            btn1.classList.add('pagination-button');
+            btn1.textContent = currentPage;
+            btn1.addEventListener('click', () => handlePageChange(currentPage))
+            pagination.appendChild(btn1)
+            if (hasNextPage) {
+                const btn3 = document.createElement('button');
+                btn3.classList.add('pagination-button');
+                btn3.textContent = nextPage;
+                btn3.addEventListener('click', () => handlePageChange(nextPage))
+                pagination.appendChild(btn3)
+            }
+        }
+
+        function handlePageChange(page) {
+            const url = new URL(window.location.href);
+            url.searchParams.set('page', page);
+            history.pushState({}, '', url);
+            location.reload();
+            // getExpense(page);
+        }
+
+        // function getExpense(page) {
+        //     const token = localStorage.getItem('token')
+        //     axios.get(`http://localhost:4500/expense/get-expense?page=${page}`, { headers: { "Authorization": token } })
+        //         .then(({ data: { allExpense, ...pageData } }) => {
+        //             showExpense(allExpense);
+        //             showPagination(pageData);
+        //         }).catch(err => console.log(err))
+        // }
 
         function showExpense(obj) {
             document.getElementById('amount').value = '';
@@ -198,8 +245,9 @@
         function downloadUrls() {
             const token = localStorage.getItem('token')
             axios.get('http://localhost:4500/user/downloadurls', { headers: { "Authorization": token } })
-            .then((response) => {
-                    console.log(response);
+                .then((response) => {
+                    const parentNode = document.getElementById('downloadUrl');
+                    parentNode.innerHTML = '';
                     for (var i = 0; i < response.data.allUrls.length; i++) {
                         showUrl(response.data.allUrls[i]);
                     }
@@ -209,8 +257,8 @@
 
         function showUrl(url) {
             const parentNode = document.getElementById('downloadUrl');
-            const childHTML = `<li id=${url.id}> ${url.url} - <button> Download </button>`;
-            parentNode.innerHTML = parentNode.innerHTML + childHTML;
+            const childHTML = `<li id=${url.id}> url_id${url.id} ${url.createdAt} <a href="${url.url}"> Download </a>`;
+            parentNode.innerHTML += childHTML;
         }
     </script>
 </body>

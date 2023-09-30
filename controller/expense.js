@@ -11,11 +11,11 @@ exports.downloadExpense = async (req, res, next) => {
         const stringExp = JSON.stringify(expenses);
         const filename = `Expense${userid}/${new Date()}.txt`;
         const fileURL = await S3Services.uploadToS3(stringExp, filename);
-        await Url.create({url: fileURL, userId: userid })
+        await Url.create({ url: fileURL, userId: userid })
         res.status(200).json({ fileURL, success: true })
     } catch (err) {
         console.error("Error adding user:", err);
-        res.status(500).json({ fileURL:'',success:false, err:err })
+        res.status(500).json({ fileURL: '', success: false, err: err })
     }
 }
 
@@ -52,10 +52,28 @@ exports.postExpense = async (req, res, next) => {
     }
 }
 
+const ITEMS_PER_PAGE = 5;
 exports.getExpense = async (req, res, next) => {
+    const page = +req.query.page || 1;
     try {
-        const expenses = await Expense.findAll({ where: { userId: req.user.id } });
-        res.status(200).json({ allExpense: expenses });
+        const totalExpenses = await Expense.count({
+            where: { userId: req.user.id }
+        });
+        const offset = (page - 1) * ITEMS_PER_PAGE
+        const expenses = await Expense.findAll({
+            where: { userId: req.user.id },
+            offset: offset,
+            limit: ITEMS_PER_PAGE,
+        });
+        res.status(200).json({
+            allExpense: expenses,
+            currentPage: page,
+            hasNextPage: offset + expenses.length  < totalExpenses,
+            nextPage: page + 1,
+            hasPreviousPage: page > 1,
+            previousPage: page - 1,
+            lastPage: Math.ceil(totalExpenses / ITEMS_PER_PAGE)
+        });
     } catch (err) {
         console.error("Error adding user:", err);
         res.status(500).json({ error: err.message })
