@@ -1,7 +1,12 @@
+require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const sequelize = require('./utility/database')
+const helmet = require('helmet')
+const compression  = require('compression')
+const fs = require('fs');
+const morgan = require('morgan');
 
 const app = express();
 
@@ -20,9 +25,15 @@ const User = require('./model/user')
 const Order = require('./model/order')
 const Url = require('./model/downloadURL')
 
-const staticPath = path.join(__dirname, "./view")
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'})
 
+app.use(helmet());
+app.use(compression());
+app.use(morgan('combined', { stream: accessLogStream}));
+
+const staticPath = path.join(__dirname, "./view")
 app.use(express.static(staticPath));
+
 app.use('/user', userRoutes);
 app.use('/expense', expenseRoutes)
 app.use('/purchase', purchaseRoutes)
@@ -45,6 +56,6 @@ sequelize
     // .sync({force: true})
     .sync()
     .then(result => {
-        app.listen(4500);
+        app.listen(process.env.PORT || 4500);
     })
     .catch(err => console.log(err))
