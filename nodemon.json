@@ -4,6 +4,10 @@
         "KEY_SECRET": "4od53mkNQ24EdmREH2TjfnCH",
         "API_KEY": "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",
         "ACCESS_KEY": "AKIA3KAAP2OUXQHBJWPK",
-        "SECRATE_ACCESS_KEY": "FfDfCaSTAe9a9Qkcnalp74PhejjTbP5jieFrUp4Q"
+        "SECRATE_ACCESS_KEY": "FfDfCaSTAe9a9Qkcnalp74PhejjTbP5jieFrUp4Q",
+        "DB_NAME": "expense-tracker",
+        "DB_USERNAME": "root",
+        "DB_PASSWORD": "Ali@9934",
+        "DB_HOST": "localhost"
     }
 }
