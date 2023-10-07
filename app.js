@@ -26,13 +26,13 @@ const Order = require('./model/order')
 const Url = require('./model/downloadURL')
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), {flags: 'a'})
-
+const staticPath = path.join(__dirname, "./view")
+app.use(express.static(staticPath));
 app.use(helmet());
 app.use(compression());
 app.use(morgan('combined', { stream: accessLogStream}));
 
-const staticPath = path.join(__dirname, "./view")
-app.use(express.static(staticPath));
+
 
 app.use('/user', userRoutes);
 app.use('/expense', expenseRoutes)
