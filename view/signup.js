@@ -19,7 +19,7 @@ function saveUser(event) {
     const user = {
         name, email, password
     }
-    axios.post("http://localhost:4500/user/signup", user)
+    axios.post("http://54.224.246.184:4500/user/signup", user)
         .then(response => {
             alert(response.data.message)
             window.location.href="./login.html"
