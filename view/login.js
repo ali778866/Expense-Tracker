@@ -18,7 +18,7 @@ async function logInUser(event) {
     const user = {
         email, password
     }
-    await axios.post("http://localhost:4500/user/login", user)
+    await axios.post("http://54.224.246.184:4500/user/login", user)
         .then(response => {
             alert(response.data.message)
             // console.log("user::::", response.data.userId)

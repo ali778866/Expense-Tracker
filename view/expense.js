@@ -11,7 +11,7 @@ function saveExpense(event) {
         category,
         userId
     }
-    axios.post("http://localhost:4500/expense/add-expense", obj, { headers: { "Authorization": token } })
+    axios.post("http://54.224.246.184:4500/expense/add-expense", obj, { headers: { "Authorization": token } })
         .then((response) => {
             console.log(response);
             showExpense(response.data.addExpense);
@@ -29,7 +29,7 @@ window.addEventListener("DOMContentLoaded", () => {
         document.getElementById('razor-pay').style.display = 'none';
         premiumUser()
     }
-    axios.get(`http://localhost:4500/expense/get-expense?page=${page}`, { headers: { "Authorization": token } })
+    axios.get(`http://54.224.246.184:4500/expense/get-expense?page=${page}`, { headers: { "Authorization": token } })
         .then((response) => {
             console.log(response);
             for (var i = 0; i < response.data.allExpense.length; i++) {
@@ -42,13 +42,13 @@ window.addEventListener("DOMContentLoaded", () => {
 
 document.getElementById("razor-pay").onclick = async function (e) {
     const token = localStorage.getItem('token')
-    const response = await axios.get('http://localhost:4500/purchase/premiummembership', { headers: { "Authorization": token } })
+    const response = await axios.get('http://54.224.246.184:4500/purchase/premiummembership', { headers: { "Authorization": token } })
     console.log(response)
     var options = {
         "key": response.data.key_id,
         "order_id": response.data.order.id,
         "handler": async function (response) {
-            const res = await axios.post('http://localhost:4500/purchase/updatetranstatus', {
+            const res = await axios.post('http://54.224.246.184:4500/purchase/updatetranstatus', {
                 order_id: options.order_id,
                 payment_id: response.razorpay_payment_id,
             }, { headers: { "Authorization": token } })
@@ -117,7 +117,7 @@ function handlePageChange(page) {
 
 function getExpense(page) {
     const token = localStorage.getItem('token')
-    axios.get(`http://localhost:4500/expense/get-expense?page=${page}`, { headers: { "Authorization": token } })
+    axios.get(`http://54.224.246.184:4500/expense/get-expense?page=${page}`, { headers: { "Authorization": token } })
         .then(({ data: { allExpense, ...pageData } }) => {
             // con
             showExpense(allExpense);
@@ -138,7 +138,7 @@ function showExpense(obj) {
 }
 
 function deleteExpense(id) {
-    axios.delete(`http://localhost:4500/expense/delete-expense/${id}`)
+    axios.delete(`http://54.224.246.184:4500/expense/delete-expense/${id}`)
         .then((response) => {
             removeExpenseFromScreen(id)
         })
@@ -169,7 +169,7 @@ function premiumUser() {
 
 async function showLeaderboard() {
         const token = localStorage.getItem('token')
-        const leaderboardarray = await axios.get('http://localhost:4500/premium/leaderboard', { headers: { "Authorization": token } })
+        const leaderboardarray = await axios.get('http://54.224.246.184:4500/premium/leaderboard', { headers: { "Authorization": token } })
         var leaderboardElem = document.getElementById('leaderboarddata')
         leaderboardElem.innerHTML = '';
         leaderboardElem.innerHTML += '<h2> Leader Board </h2>'
@@ -181,7 +181,7 @@ async function showLeaderboard() {
 
 function download() {
     const token = localStorage.getItem('token')
-    axios.get('http://localhost:4500/user/download', { headers: { "Authorization": token } })
+    axios.get('http://54.224.246.184:4500/user/download', { headers: { "Authorization": token } })
         .then((response) => {
             if (response.status === 200) {
                 var a = document.createElement("a");
@@ -199,7 +199,7 @@ function download() {
 
 function downloadUrls() {
     const token = localStorage.getItem('token')
-    axios.get('http://localhost:4500/user/downloadurls', { headers: { "Authorization": token } })
+    axios.get('http://54.224.246.184:4500/user/downloadurls', { headers: { "Authorization": token } })
         .then((response) => {
             const parentNode = document.getElementById('downloadUrl');
             parentNode.innerHTML = '';
