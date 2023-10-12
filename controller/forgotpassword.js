@@ -55,7 +55,7 @@ const userForgotPassword = async (req, res) => {
         }
     } catch (err) {
         console.error(err)
-        return res.json({ message: err, sucess: false });
+        return res.json({ message: 'User doesnt exist', sucess: false });
     }
 
 }
