@@ -20,13 +20,13 @@ const userForgotPassword = async (req, res) => {
                 .catch(err => {
                     throw new Error(err)
                 })
-
+                console.log(process.env.API_KEY)
             apiKey.apiKey = process.env.API_KEY
             const transEmailApi = new Sib.TransactionalEmailsApi()
 
             const sender = {
-                email: 'mdali.ali1995@gmail.com',
-                name: 'Md Ali Ansari'
+                email: 'mdali.ali76@gmail.com',
+                name: 'Expense Tracker App'
             }
 
             const receivers = [
@@ -39,14 +39,21 @@ const userForgotPassword = async (req, res) => {
                 sender,
                 to: receivers,
                 subject: 'Reset Your Password [ExpenseTrackerApp]',
-                htmlContent: `<p> Now Click the link below to Reset your password </p> 
-                    <a href="http://107.23.210.145:4500/password/resetpassword/${id}">Reset password</a>`
+                htmlContent: `
+                
+                <h2> Now Click the link below to Reset your Password </h2> 
+                    <a href="http://107.23.210.145:4500/password/resetpassword/${id}"><b>Reset password</b></a>
+                    
+                    <p> This is a system generated mail so please do not reply to this mail.</p>
+                    <p> Created By : <b>MD ALI ANSARI</b></p>
+                    <a href="https://www.facebook.com/Mohammadali.Ali11"><b>Facebook</b></a>`
             })
                 .then((response) => {
                     return res.json({ message: 'Link to reset password sent to your mail ', sucess: true })
 
                 })
                 .catch((error) => {
+                    // console.log(error);
                     throw new Error(error);
                 })
 

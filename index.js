@@ -5,7 +5,7 @@ require('dotenv').config()
 const client = Sib.ApiClient.instance
 
 const apiKey = client.authentications['api-key']
-
+console.log(process.env.API_KEY)
 apiKey.apiKey = process.env.API_KEY
 
 const transEmailApi = new Sib.TransactionalEmailsApi()
