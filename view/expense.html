@@ -16,9 +16,9 @@
             </div>
             <div>
                 <p id="userName" class="navName"></p>
-            <button class="btn2" onclick="redirectLogin()">Logout</button>
+                <button class="btn2" onclick="redirectLogin()">Logout</button>
             </div>
-            
+
         </nav>
         <form class="form" onsubmit="saveExpense(event)">
             <label class="form-label">Expense Amount</label>
@@ -28,7 +28,9 @@
             <label class="form-label">Choose a Category</label>
             <select id="category" name="category" required>
                 <option value="">Select a Category</option>
+                <option value="Shopping">Shopping</option>
                 <option value="Movie">Movie</option>
+                <option value="Gift">Gift</option>
                 <option value="Food">Food</option>
                 <option value="Travel">Travel</option>
                 <option value="Fuel">Fuel</option>
@@ -36,10 +38,19 @@
             <button type="submit" class="btn">Add Expense</button>
         </form>
         <div id="premium" class="hide"></div>
-        <ul id="listofExpense" class="list-group"></ul>
+        <div>
+            <label for="entries">Show entries: </label>
+            <select id="entries" onchange="updateEntries(this)">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+            </select>
+            <ul id="listofExpense" class="list-group"></ul>
+            <div id="pagination" class="pagination-container"></div>
+        </div>
         <ul id="leaderboarddata" class="list-group"></ul>
         <ul id="downloadUrl" class="list-group"></ul>
-        <div id="pagination" class="pagination-container"></div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
     <script src="/expense.js"></script>

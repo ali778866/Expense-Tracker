@@ -54,17 +54,20 @@ exports.postExpense = async (req, res, next) => {
 
 const ITEMS_PER_PAGE = 5;
 exports.getExpense = async (req, res, next) => {
+    console.log("aliali"+req.query.page)
+    const itemsPerPage = +req.query.entriesPerPage || ITEMS_PER_PAGE;
     const page = +req.query.page || 1;
     try {
         const totalExpenses = await Expense.count({
             where: { userId: req.user.id }
         });
-        const offset = (page - 1) * ITEMS_PER_PAGE
+        const offset = (page - 1) * itemsPerPage
         const expenses = await Expense.findAll({
             where: { userId: req.user.id },
             offset: offset,
-            limit: ITEMS_PER_PAGE,
+            limit: itemsPerPage,
         });
+        console.log(offset, itemsPerPage, page)
         res.status(200).json({
             allExpense: expenses,
             currentPage: page,
@@ -72,7 +75,8 @@ exports.getExpense = async (req, res, next) => {
             nextPage: page + 1,
             hasPreviousPage: page > 1,
             previousPage: page - 1,
-            lastPage: Math.ceil(totalExpenses / ITEMS_PER_PAGE)
+            lastPage: Math.ceil(totalExpenses / itemsPerPage),
+            entriesPerPage: itemsPerPage
         });
     } catch (err) {
         console.error("Error adding user:", err);

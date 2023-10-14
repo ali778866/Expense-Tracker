@@ -40,7 +40,7 @@ const userForgotPassword = async (req, res) => {
                 to: receivers,
                 subject: 'Reset Your Password [ExpenseTrackerApp]',
                 htmlContent: `<p> Now Click the link below to Reset your password </p> 
-                    <a href="http://3.87.38.176:4500/password/resetpassword/${id}">Reset password</a>`
+                    <a href="http://107.23.210.145:4500/password/resetpassword/${id}">Reset password</a>`
             })
                 .then((response) => {
                     return res.json({ message: 'Link to reset password sent to your mail ', sucess: true })

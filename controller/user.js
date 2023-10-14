@@ -41,7 +41,7 @@ const loginUser = async (req, res, next) => {
             if(user.length > 0){
                 bcrypt.compare(password, user[0].password, (err, response) => {
                     if(err){
-                        res.status(500).json({message: "Something went wrong"})
+                        res.status(500).json({success: false, message: "Something went wrong"})
                     }
                     if(response === true){
                         res.status(200).json({success: true, message : "login Successfully", userId: user[0].id, token: generateToken(user[0].id, user[0].name, user[0].ispremiumuser) })
@@ -50,7 +50,7 @@ const loginUser = async (req, res, next) => {
                     }
                 })
             }else{
-                return res.json({message : "Invalid Credentials"});
+                return res.json({success: false, message : "User Not Exist"});
         }
     }).catch(err => console.log(err))
        

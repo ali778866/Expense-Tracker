@@ -18,13 +18,17 @@ async function logInUser(event) {
     const user = {
         email, password
     }
-    await axios.post("http://3.87.38.176:4500/user/login", user)
+    await axios.post("http://107.23.210.145:4500/user/login", user)
         .then(response => {
-            alert(response.data.message)
-            // console.log("user::::", response.data.userId)
-            localStorage.setItem('token', response.data.token)
-            localStorage.setItem('userId', response.data.userId)
-            window.location.href="./expense.html"
+            if(response.data.success){
+                alert(response.data.message)
+                localStorage.setItem('token', response.data.token)
+                localStorage.setItem('userId', response.data.userId)
+                window.location.href="./expense.html"
+            }else{
+                alert(response.data.message)
+            }
+            
         })
         .catch(err => console.log(err))
 }
