@@ -73,6 +73,7 @@ const resetpassword = (req, res) => {
         if (forgotpasswordrequest) {
             forgotpasswordrequest.update({ active: false });
             res.status(200).send(`<html>
+                                   <meta http-equiv="Content-Security-Policy" content="form-action 'self' http://107.23.210.145:4500;">
                                     <script>
                                         function formsubmitted(e){
                                             e.preventDefault();
